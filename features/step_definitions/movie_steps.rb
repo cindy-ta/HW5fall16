@@ -46,12 +46,7 @@ Given /^I am on the RottenPotatoes home page$/ do
 # Add a declarative step here for populating the DB with movies.
 
 Given /the following movies have been added to RottenPotatoes:/ do |movies_table|
-    # Remove this statement when you finish implementing the test step
   movies_table.hashes.each do |movie|
-    # Each returned movie will be a hash representing one row of the movies_table
-    # The keys will be the table headers and the values will be the row contents.
-    # Entries can be directly to the database with ActiveRecord methods
-    # Add the necessary Active Record call(s) to populate the database.
     if (! Movie.find_by_title(movie[:title]))
         Movie.create!(movie)
     end
@@ -94,8 +89,8 @@ Then /^I should see only movies rated: "(.*?)"$/ do |arg1|
 end
 
 Then /^I should see all of the movies$/ do
-  size = Movie.all.size
-  size.should == page.all('table#movies tr').count-1
+  rows = Movie.all.rows
+  rows.should == page.all('table#movies tr').count-1
 end
 
 Then (/^I should see movie title "(.*?)" before "(.*?)"$/) do |title1, title2|
